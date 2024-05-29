@@ -1,28 +1,23 @@
 #!/usr/bin/env python3
 
 """
-Simple web application that demonstrates Flask-Babel.
+Simple Flask application with internationalization and user-specific settings
 """
 
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
-import pytz
-from pytz import exceptions
 
-# Initialize Flask application
 app = Flask(__name__)
 
-# Set default locale and timezone
-app.config['BABEL_DEFAULT_LOCALE'] = 'en'
-app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
+# Configuration
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'  # Default locale
+app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'  # Default timezone
+app.config['LANGUAGES'] = ['en', 'fr']  # Supported languages
 
-# Set supported languages
-app.config['LANGUAGES'] = ['en', 'fr']
-
-# Initialize Babel extension
+# Babel initialization
 babel = Babel(app)
 
-# Dictionary of users with their locale and timezone
+# List of users with their profile information
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -33,7 +28,9 @@ users = {
 
 def get_user():
     """
-    Get user information from the request arguments.
+    Get the user's profile information based on the 'login_as'
+    query parameter.
+    Returns None if the parameter is not present or invalid.
     """
     try:
         user_id = int(request.args.get('login_as'))
@@ -45,15 +42,18 @@ def get_user():
 @app.before_request
 def before_request():
     """
-    Set the user in the request global state before each request.
+    Store the user's profile information in the global g object for
+    use in templates.
     """
     g.user = get_user()
 
 
-@babel.localeselector_func
+@babel.localeselector
 def get_locale():
     """
-    Select the locale for the user based on the request arguments.
+    Select the best-matched locale based on the 'locale' query parameter, the
+    user's locale, or the
+    default locale.
     """
     locale = request.args.get('locale')
     if locale in app.config['LANGUAGES']:
@@ -73,7 +73,4 @@ def index():
 
 
 if __name__ == "__main__":
-    """
-    Run the application.
-    """
     app.run()
