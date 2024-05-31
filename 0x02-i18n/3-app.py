@@ -19,13 +19,15 @@ app.config['LANGUAGES'] = ['en', 'fr']  # Supported languages
 babel = Babel(app)
 
 
-@babel.localeselector
 def get_locale():
     """
     Function to get the best-matched locale based on the request's
     Accept-Language header.
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/')
