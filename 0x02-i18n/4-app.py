@@ -24,7 +24,6 @@ babel = Babel(app)
 the request's Accept-Language header"""
 
 
-@babel.locale_selector
 def get_locale():
     """
     Select the best match locale based on the request's Accept-Language header
@@ -40,6 +39,7 @@ def get_locale():
         return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
+babel.init_app(app, locale_selector= get_locale)
 
 # Route to render the index page
 @app.route('/')

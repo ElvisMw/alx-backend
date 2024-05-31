@@ -1,0 +1,7 @@
+msgid "Welcome to Holberton"
+msgstr ""
+
+#: templates/3-index.html:8 templates/4-index.html:8
+msgid "Hello world"
+msgstr ""
+
