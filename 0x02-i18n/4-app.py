@@ -8,6 +8,11 @@ from flask import Flask, render_template, request
 from flask_babel import Babel, _
 
 
+class Config:
+    LANGUAGES = ['en', 'fr']
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
+
 # Create the Flask application
 app = Flask(__name__)
 
