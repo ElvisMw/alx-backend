@@ -17,7 +17,14 @@ babel = Babel(app)
 
 
 def get_user():
-    user_id = request.args.get('login_as')
+    """
+    Retrieves the user object based on the provided 'login_as' query parameter
+
+    Returns:
+        The user object if the 'login_as' query parameter is present
+        and matches a valid user ID.
+        None otherwise.
+    """
     if user_id and int(user_id) in users:
         return users[int(user_id)]
     return None
@@ -28,11 +35,21 @@ babel = Babel(app, locale_selector=get_locale)
 
 @app.before_request
 def before_request():
-    g.user = get_user()
+    """
+    A function that is executed before each request is processed.
+    It sets the 'g.user' variable to the result of the 'get_user' function.
+    This function does not take any parameters and does not return any value.
+    """
 
 
 def get_locale():
-    locale = request.args.get('locale')
+    """
+    Function to get the best-matched locale based on the request's
+    Accept-Language header and URL parameters.
+
+    Returns:
+        str: The best-matched locale.
+    """
     if locale and locale in app.config['LANGUAGES']:
         return locale
     if g.user:
@@ -44,7 +61,12 @@ def get_locale():
 
 @app.route('/')
 def index():
-    return render_template('5-index.html')
+    """
+    Route decorator for the root URL ("/") that handles the index page.
+
+    Returns:
+        The rendered template for the "5-index.html" page.
+    """
 
 
 if __name__ == '__main__':
