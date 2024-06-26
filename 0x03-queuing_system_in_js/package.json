@@ -1,0 +1,30 @@
+{
+  "name": "queuing-system",
+  "version": "1.0.0",
+  "description": "Queuing System in JS",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint",
+    "test": "mocha --require @babel/register --exit",
+    "dev": "nodemon --exec babel-node --presets @babel/preset-env"
+  },
+  "author": "Elvis Mwanthi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "kue": "^0.11.6",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.0",
+    "@babel/core": "^7.8.0",
+    "@babel/node": "^7.8.0",
+    "@babel/preset-env": "^7.8.2",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.2"
+  }
+}
+
